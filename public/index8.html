@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">点我发送请求</button>
+
+    <script type="text/javascript">
+        //获取按钮
+        var btn = document.getElementById('btn');
+        // 为按钮添加点击事件
+        btn.onclick = function() {
+            jsonp({
+                url: 'http://localhost:3001/list',
+                //传递参数
+                data: {
+                    name: 'riven',
+                    age: 30
+                },
+                sussess: function(data) {
+                    console.log(data);
+                }
+            })
+        }
+
+        function jsonp(options) {
+            // 动态创建script标签
+            var script = document.createElement('script');
+            //拼接字符串变量
+            var params = '';
+            for (var attr in options.data) {
+                params += '&' + attr + '=' + options.data[attr];
+            }
+            // 拼接随机函数名称
+            var fnName = 'myJsonp' + Math.random().toString().replace('.', '');
+            console.log(fnName);
+
+            //我们要想办法将它变成全局函数
+            window[fnName] = options.sussess;
+            // 为script标签添加src属性
+            script.src = options.url + '?callback=' + fnName + params;
+            // 将script标签追加到页面中
+            document.body.appendChild(script);
+            //为script标签添加onload加载完成事情
+            script.onload = function() {
+                document.body.removeChild(script)
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--1.  下载art-template模板引擎库文件并在HTML页面中引入库文件 -->
+    <script src="./js/template-web.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 5.通过模板语法告诉模板引擎，数据和html字符串要如何拼接 -->
+    <div id="container"></div>
+    <!-- 2. 准备art-template模板 -->
+    <script type="text/html" id="tpl">
+        <h1>{{ username }} {{ age }}</h1>
+    </script>
+
+    <script type="text/javascript">
+        // 3.告诉模板引擎将那个数据和哪个模板进行拼接
+        // 3.1 模板id  数据  对象类型。 方法的返回值就是拼接好的html字符串。
+        var html = template('tpl', {
+            username: 'zhangsan',
+            age: 30
+        });
+        //4.将拼接好的html字符串添加到页面中
+        document.getElementById('container').innerHTML = html;
+    </script>
+</body>
+
+</html>

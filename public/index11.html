@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./js/jQuery.js"></script>
+    <script src="bootstrap-3.3.7/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap-3.3.7/dist/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email" name="usename">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+        </div>
+
+    </form>
+    <button class="btn btn-default" id="loginBtn">登录</button>
+    <button class="btn btn-default" id="checkLogin">检测是否登录</button>
+
+    <script type="text/javascript">
+        // 获取登录按钮
+        var loginBtn = document.getElementById('loginBtn');
+        // 获取检测登录状态按钮
+        var checkLogin = document.getElementById('checkLogin');
+        // 获取登录表单
+        var loginForm = document.getElementById('loginForm');
+        // 为登录按钮添加点击事件
+        loginBtn.onclick = function() {
+
+            // 将html表单转换为formData表单对象
+            var formData = new FormData(loginForm)
+                // 创建ajax对象
+            var xhr = new XMLHttpRequest()
+                // 对ajax对象进行配置
+            xhr.open('post', 'http://localhost:3001/login');
+            //当发送跨域请求时，携带cookie信息
+            xhr.withCredentials = true;
+            // 发送请求并传递请求参数
+            xhr.send(formData);
+            // 监听服务器端给与的响应内容
+            xhr.onload = function() {
+                console.log(xhr.responseText);
+            }
+        }
+
+        checkLogin.onclick = function() {
+
+            // 将html表单转换为formData表单对象
+            var formData = new FormData(loginForm)
+                // 创建ajax对象
+            var xhr = new XMLHttpRequest()
+                // 对ajax对象进行配置
+            xhr.open('post', 'http://localhost:3001/checklogin');
+            //当发送跨域请求时，携带cookie信息
+            xhr.withCredentials = true;
+            // 发送请求并传递请求参数
+            xhr.send();
+            // 监听服务器端给与的响应内容
+            xhr.onload = function() {
+                console.log(xhr.responseText);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

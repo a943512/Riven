@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jQuery.js"></script>
+</head>
+
+<body>
+    <button id="btn">点我</button>
+    <script>
+        $('#btn').on('click', function() {
+            $.ajax({
+                // 请求方式
+                type: 'get',
+                // 请求地址
+                url: '/list',
+                // 请求参数
+                data: {
+                    // 'name=zhangsan&age=20'
+                    name: 'zhangsan',
+                    age: '20'
+                        // JSON.stringify({name:'zhangsan',age:'20'})
+                },
+                // 请求的数据类型
+                contentType: 'application/x-www-form-urlencoded',
+                // contentType: 'application/json',
+                // 请求之前做的一些事情
+                beforeSend: function() {
+                    return true
+                },
+                success: function(response) {
+                    console.log(response);
+
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

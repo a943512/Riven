@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="./js/myajax.js"></script>
+
+    <title>Document</title>
+
+
+
+    <style>
+        .info {
+            width: 600px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            background-color: pink;
+        }
+        
+        .error {
+            width: 600px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            background-color: red;
+        }
+    </style>
+
+</head>
+
+
+
+<body>
+
+    <div>
+
+        <div>
+
+            <label>邮箱地址</label>
+
+            <input type="email" placeholder="请输入邮箱地址" id="email">
+
+        </div>
+
+        <p id="info">231</p>
+
+    </div>
+
+    <script>
+        //获取页面中的元素
+
+        var emailInp = document.getElementById('email');
+
+        var info = document.getElementById('info');
+
+
+
+        //当文本框离开焦点以后
+
+        emailInp.onblur = function() {
+
+            //获取用户输入的邮箱地址
+
+            var mail = this.value;
+
+            // 验证邮箱地址的正则表达式
+
+            var reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+            if (!reg.test(mail)) {
+
+                //给出用户提示信息
+
+                info.innerHTML = '请输入符合规则的邮箱地址';
+
+                //让提示信息显示为错误提示信息的样式
+
+                info.className = 'error';
+
+                //阻止程序乡下执行
+
+                return;
+
+            }
+
+            // 向后端发请求
+
+            ajax({
+
+                type: 'get',
+
+                url: 'http://localhost:3000/list',
+
+                data: {
+
+                    email: email
+
+                },
+
+                success: function(result) {
+
+                    console.log(result);
+
+                    info.innerHTML = result.message;
+
+                    info.className = 'info'
+
+                },
+
+                error: function(result) {
+
+                    console.log(result);
+
+                    info.innerHTML = result.message;
+
+                    info.className = 'info'
+
+                }
+
+            });
+
+        }
+    </script>
+
+</body>
+
+
+
+</html>
